@@ -1,0 +1,14 @@
+Beanstalk Worker for Node.js
+============================
+
+Simple BeanstalkWorker and BeanstalkWorkerCluster objects for connecting to a beanstalkd queue and running jobs.
+
+requires node-beanstalk-client
+
+Try it:
+
+$ node bin/worker.js
+
+
+
+
