@@ -36,7 +36,7 @@ case "$1" in
 	start
   ;;
     *)
-      echo "Usage: beanstalk_worker_cluster {start|stop|restart}"
+      echo "Usage: workerd {start|stop|restart}"
       exit 1
   ;;
 esac      
