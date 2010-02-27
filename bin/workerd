@@ -1,0 +1,44 @@
+#!/bin/bash
+
+LOG_FILE=log/worker.log
+
+PID_FILE=log/worker.pid
+
+CMD="node bin/worker.js"
+
+RETVAL=0
+
+function start {
+    nohup $CMD >> $LOG_FILE 2>&1 < /dev/null &
+    RETVAL=$?
+    echo $! > $PID_FILE
+}
+
+function stop {
+    pid=`cat $PID_FILE`
+    kill -INT $pid
+    RETVAL=$?
+    rm $PID_FILE
+}
+
+
+
+case "$1" in
+    start)
+	start
+
+  ;;
+    stop)
+	stop
+  ;;
+    restart)
+	stop
+	start
+  ;;
+    *)
+      echo "Usage: beanstalk_worker_cluster {start|stop|restart}"
+      exit 1
+  ;;
+esac      
+
+exit $RETVAL

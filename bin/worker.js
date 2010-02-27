@@ -22,6 +22,17 @@ BeanstalkWorkerCluster.start(3, '127.0.0.1:11300', handlers, worker_options);
 
 //daemonize
 
+//logging to file
+
 //leaks memory heavily!!!
 
-//logging to file
+// var sys = require('sys');
+// function log_mem() {
+//   sys.puts(process.memoryUsage().rss / 1024);
+// }
+
+// var i = setInterval(log_mem, 1000);
+
+// process.addListener('SIGINT', function() {
+// 		      clearInterval(i);
+// 		      });
