@@ -4,7 +4,7 @@ var url = require('url');
 var handlers = {
 
   //data looks like {method: 'GET'|'POST', url: 'http://www.example.com/search?q=blah', headers: {'Extra-header': value}, body: 'bodystring'}
-  http_request: function(data, done) {
+  http_request: function(data, done, failed) {
     var uri = url.parse(data.url);
 
     if(!data.headers) {
@@ -25,13 +25,18 @@ var handlers = {
 
     var client = http.createClient(port, uri.hostname);
     var request = client.request(data.method, path, data.headers);
-    request.addListener('response', function (response) {
+    var handle_response = function(response) {
 			  done();
-			});
+    };
+    request.addListener('response', handle_response);
     if('POST' === data.method) {
       request.write(data.body);
     }
     request.close();
+    setTimeout(function() {
+      request.removeListener('response', handle_response); // v important to do this
+      failed('timedout'); //@@fixme
+    }, 30000);
   }
 
 };
