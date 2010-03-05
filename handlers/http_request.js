@@ -39,7 +39,7 @@ var handlers = {
       failed('timedout'); //@@fixme
     };
 
-    timer = setTimeout(handle_timeout, 3000); //@@ hardcoded time -- fixme
+    timer = setTimeout(handle_timeout, 30000); //@@ hardcoded time -- fixme
 
     request.addListener('response', handle_response);
     if('POST' === data.method) {
