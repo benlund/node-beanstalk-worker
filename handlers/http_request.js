@@ -20,6 +20,9 @@ var handlers = {
     }
     if((data.method === 'POST') && data.body) {
       data.headers['Content-Length'] = data.body.length;
+      if(!data.headers['Content-Type']) {
+	data.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+      }
     }
 
     var port = uri.port || 80;
