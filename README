@@ -1,7 +1,7 @@
 Beanstalk Worker for Node.js
 ============================
 
-version 0.0.1
+version 0.2
 
 Simple BeanstalkWorker and BeanstalkWorkerCluster objects for connecting to a beanstalkd queue and running jobs.
 
@@ -9,5 +9,9 @@ requires node-beanstalk-client
 
 Try it:
 
+In one console:
+$ node test/produce_test_jobs.js
+
+In another:
 $ node bin/worker.js
 

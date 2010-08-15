@@ -1,10 +1,10 @@
 var http = require('http');
 var url = require('url');
 
-var handlers = {
+exports.handlers = {
 
   //data looks like {method: 'GET'|'POST', url: 'http://www.example.com/search?q=blah', headers: {'Extra-header': value}, body: 'bodystring'}
-  http_request: function(data, done, failed) {
+  http_request: function(data, done) {
     var timer;
     var uri = url.parse(data.url);
 
@@ -25,10 +25,15 @@ var handlers = {
       }
     }
 
-    var port = uri.port || 80;
+    var port = parseInt(uri.port, 10) || 80;
 
     var client = http.createClient(port, uri.hostname);
     var request = client.request(data.method, path, data.headers);
+
+    if('POST' === data.method) {
+      request.write(data.body);
+    }
+    request.end();
 
     var handle_response = function(response) {
       if(timer) {
@@ -39,18 +44,21 @@ var handlers = {
 
     var handle_timeout = function(response) {
       request.removeListener('response', handle_response); // v important to do this
-      failed('timedout'); //@@fixme
+      done('release', 30);
     };
 
-    timer = setTimeout(handle_timeout, 30000); //@@ hardcoded time -- fixme
+    timer = setTimeout(handle_timeout, 30000);
 
-    request.addListener('response', handle_response);
-    if('POST' === data.method) {
-      request.write(data.body);
-    }
-    request.close();
+    client.on('error', function() {
+      if(timer) {
+	clearTimeout(timer);
+      }
+
+      request.removeListener('response', handle_response); // v important to do this
+      done('bury');
+    });
+
+    request.on('response', handle_response);
   }
 
 };
-
-process.mixin(exports, handlers);
