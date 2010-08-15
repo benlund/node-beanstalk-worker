@@ -12,10 +12,7 @@ class BeanstalkWorker extends events.EventEmitter
     @stopped: false
 
 
-  start: (options) ->
-    if !options?
-      options: {}
-
+  start: (tubes, ignore_default) ->
     @log 'Starting...'
 
     @on 'next', () =>
@@ -27,14 +24,12 @@ class BeanstalkWorker extends events.EventEmitter
       else
         @connection: conn
 
-        @watch_tubes options.tubes, () =>
-
+        @watch_tubes tubes, () =>
           ignored: []
-          if options.ignore_default
+          if ignore_default
           	ignored.push 'default'
 
           @ignore_tubes ignored, () =>
-
           	@log 'Started'
           	@emit 'next'
 
