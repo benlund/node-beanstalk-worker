@@ -1,0 +1,9 @@
+{ "name": "beanstalk_worker"
+,  "version": "0.2.0"
+,  "main": "lib/beanstalk_worker"
+,  "bin": { "nbworker" : "bin/worker.js" }
+,  "description": "library and example script for building workers to handle jobs held in a beanstalkd message queue server"
+, "dependencies" : 
+  { "beanstalk_client" : "0.2.0"
+  }
+}

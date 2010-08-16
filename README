@@ -1,11 +1,11 @@
 Beanstalk Worker for Node.js
 ============================
 
-version 0.2
+version 0.2.0
 
 Simple BeanstalkWorker and BeanstalkWorkerCluster objects for connecting to a beanstalkd queue and running jobs.
 
-requires node-beanstalk-client
+requires node-beanstalk-worker
 
 Try it:
 
@@ -15,3 +15,29 @@ $ node test/produce_test_jobs.js
 In another:
 $ node bin/worker.js
 
+===
+
+NPM:
+
+$ npm install beanstalk_worker 
+
+ -> Creates nbworker as an executable symlink to bin/worker.js (Will also install the client lib)
+
+You can pass this the path to a config file to specify how many client connections to open, where the handlers for jobs are, and so forth:
+
+$ nbworker /etc/npworler/conf/example.js
+
+
+/etc/nbworker/conf/example.js:
+---
+module.exports = {
+
+  workers: 3,
+  server: '127.0.0.1:11300',
+  tubes: ['external'],
+  ignore_default: true,
+  handlers: ['../handlers/test', '../handlers/http_request']
+
+};
+console.log('Loaded conf/example.js config');
+---
