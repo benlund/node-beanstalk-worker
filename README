@@ -23,13 +23,12 @@ $ npm install beanstalk_worker
 
  -> Creates nbworker as an executable symlink to bin/worker.js (Will also install the client lib)
 
-You can pass this the path to a config file to specify how many client connections to open, where the handlers for jobs are, and so forth:
+You can pass this script the path to a config file to specify how many client connections to open, where the handlers for jobs are, and so forth:
 
-$ nbworker /etc/npworler/conf/example.js
+$ nbworker conf/example.js
 
 
-/etc/nbworker/conf/example.js:
----
+$ cat conf/example.js
 module.exports = {
 
   workers: 3,
@@ -40,4 +39,4 @@ module.exports = {
 
 };
 console.log('Loaded conf/example.js config');
----
+
