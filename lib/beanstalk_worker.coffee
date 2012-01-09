@@ -131,7 +131,9 @@ class BeanstalkWorker extends events.EventEmitter
             @bury_and_emit_next(job_id)
 
           else
+            reason: action
             @log('Failed to run job : ' + job_id + ' : ' + reason)
+            @burty_and_emit_next(job_id)
 
     catch ex
       @log 'Exception running job : ' + job_id + ' : ' + ex.toString()
