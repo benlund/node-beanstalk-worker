@@ -81,11 +81,12 @@ class BeanstalkWorker extends events.EventEmitter
         else
           @log 'Error reserving job : ' + err.toString();
       else
+        job: null
+
         try
           job: JSON.parse(job_json)
 
         catch e
-          job: null
           @log 'Error parsing job JSON : ' + job_id + ' : ' + e.toString()
 
         if job?
@@ -133,7 +134,7 @@ class BeanstalkWorker extends events.EventEmitter
           else
             reason: action
             @log('Failed to run job : ' + job_id + ' : ' + reason)
-            @burty_and_emit_next(job_id)
+            @bury_and_emit_next(job_id)
 
     catch ex
       @log 'Exception running job : ' + job_id + ' : ' + ex.toString()
@@ -166,4 +167,4 @@ class BeanstalkWorker extends events.EventEmitter
   log: (message) ->
     @logger.log('[ ' + new Date().toString() + ' ] [ ' + process.pid + ' (' + @id + ') ] : ' + message)
 
-exports.BeanstalkWorker: BeanstalkWorker
+exports.BeanstalkWorker = BeanstalkWorker
