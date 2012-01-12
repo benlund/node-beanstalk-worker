@@ -1,5 +1,5 @@
-events: require 'events'
-client: require('beanstalk_client').Client
+events = require 'events'
+client = require('beanstalk_client').Client
 
 class BeanstalkWorker extends events.EventEmitter
 
