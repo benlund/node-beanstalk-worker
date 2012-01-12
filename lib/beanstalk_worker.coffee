@@ -78,10 +78,10 @@ class BeanstalkWorker extends events.EventEmitter
         else
           @log 'Error reserving job : ' + err.toString();
       else
-        job: null
+        job = null
 
         try
-          job: JSON.parse(job_json)
+          job = JSON.parse(job_json)
 
         catch e
           @log 'Error parsing job JSON : ' + job_id + ' : ' + e.toString()
@@ -95,7 +95,7 @@ class BeanstalkWorker extends events.EventEmitter
     )
 
   handle_job: (job_id, job) ->
-    handler: @find_handler job.type
+    handler = @find_handler job.type
 
     if handler?
       @run_handler_on_job_data handler, job_id, job.data
